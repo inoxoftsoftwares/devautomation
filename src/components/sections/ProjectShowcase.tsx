@@ -14,10 +14,18 @@ const ProjectShowcase = () => {
   useEffect(() => {
     const loadProjects = async () => {
       try {
+        console.log('Loading projects...');
         const data = await apiService.getProjects();
-        setProjects(data.slice(0, 3)); // Show first 3 projects
+        console.log('Projects data received:', data, 'Type:', typeof data, 'Is Array:', Array.isArray(data));
+        if (Array.isArray(data)) {
+          setProjects(data.slice(0, 3)); // Show first 3 projects
+        } else {
+          console.error('Projects data is not an array:', data);
+          setProjects([]);
+        }
       } catch (error) {
         console.error('Failed to load projects:', error);
+        setProjects([]);
       } finally {
         setLoading(false);
       }
