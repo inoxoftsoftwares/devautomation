@@ -21,9 +21,15 @@ const Projects = () => {
     const loadProjects = async () => {
       try {
         const data = await apiService.getProjects();
-        setProjects(data);
+        if (Array.isArray(data)) {
+          setProjects(data);
+        } else {
+          console.error('Projects data is not an array:', data);
+          setProjects([]);
+        }
       } catch (error) {
         console.error('Failed to load projects:', error);
+        setProjects([]);
       } finally {
         setLoading(false);
       }
@@ -33,12 +39,12 @@ const Projects = () => {
   }, []);
 
   // Get unique technologies for filter
-  const allTechnologies = projects.reduce<string[]>((acc, project) => {
+  const allTechnologies = Array.isArray(projects) ? projects.reduce<string[]>((acc, project) => {
     project.technologies.forEach(tech => {
       if (!acc.includes(tech)) acc.push(tech);
     });
     return acc;
-  }, []);
+  }, []) : [];
 
   // Filter projects
   const filteredProjects = projects.filter(project => {
