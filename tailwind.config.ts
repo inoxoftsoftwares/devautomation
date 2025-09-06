@@ -18,6 +18,17 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				'heading': 'var(--font-heading)',
+				'body': 'var(--font-body)',
+			},
+			backgroundImage: {
+				'hero-gradient': 'var(--hero-gradient)',
+			},
+			boxShadow: {
+				'card': 'var(--card-shadow)',
+				'card-hover': 'var(--card-shadow-hover)',
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -43,6 +54,10 @@ export default {
 				accent: {
 					DEFAULT: 'hsl(var(--accent))',
 					foreground: 'hsl(var(--accent-foreground))'
+				},
+				success: {
+					DEFAULT: 'hsl(var(--success))',
+					foreground: 'hsl(var(--success-foreground))'
 				},
 				popover: {
 					DEFAULT: 'hsl(var(--popover))',
