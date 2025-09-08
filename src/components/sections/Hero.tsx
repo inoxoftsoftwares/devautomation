@@ -21,7 +21,7 @@ const Hero = () => {
 
           {/* Main Headline */}
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-bold text-primary-foreground mb-6">
-            I Build Full-Stack Systems That{' '}
+            Smart softwares and automation {' '}
             <span className="bg-gradient-to-r from-accent to-success bg-clip-text text-transparent">
               Cut Costs, Save Time & Maximize Revenue
             </span>
