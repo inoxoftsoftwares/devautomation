@@ -80,11 +80,11 @@ const ProjectShowcase = () => {
         {/* Header */}
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl font-heading font-bold text-primary mb-4">
-            Proven Results & Case Studies
+            Business Impact & ROI Case Studies
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Real projects with measurable impact. See how automation and intelligent development 
-            transformed operations and delivered substantial ROI.
+            Real businesses, measurable outcomes. See how my full-stack development and automation expertise 
+            solved critical business problems and generated substantial returns on investment.
           </p>
         </div>
 
@@ -174,7 +174,7 @@ const ProjectShowcase = () => {
         <div className="text-center">
           <Button variant="accent" size="lg" asChild>
             <Link to="/projects">
-              View All Projects & Case Studies
+              Explore All Success Stories
               <ArrowRight className="w-5 h-5 ml-2" />
             </Link>
           </Button>

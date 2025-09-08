@@ -16,21 +16,21 @@ const Hero = () => {
           {/* Badge */}
           <div className="inline-flex items-center px-4 py-2 bg-background/10 backdrop-blur-sm rounded-full text-primary-foreground/90 text-sm font-medium mb-8">
             <Zap className="w-4 h-4 mr-2 text-success" />
-            Delivering Measurable ROI Through Automation
+            Full-Stack Developer + Automation Expert
           </div>
 
           {/* Main Headline */}
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-bold text-primary-foreground mb-6">
-            Stop Losing Sales to{' '}
+            I Build Full-Stack Systems That{' '}
             <span className="bg-gradient-to-r from-accent to-success bg-clip-text text-transparent">
-              Manual Tasks
+              Cut Costs, Save Time & Maximize Revenue
             </span>
           </h1>
 
           {/* Subheadline */}
           <p className="text-xl sm:text-2xl text-primary-foreground/80 mb-8 max-w-3xl mx-auto leading-relaxed">
-            We help Kenyan e-commerce and retail businesses automate repetitive tasks, 
-            reduce stockouts, and <strong>turn more visitors into paying customers</strong>.
+            Full-stack developer + automation expert delivering <strong>measurable business outcomes</strong>. 
+            I eliminate inefficiencies, reduce operational costs, and scale revenue through intelligent systems.
           </p>
 
           {/* Stats Preview */}
@@ -38,23 +38,23 @@ const Hero = () => {
             <div className="bg-background/10 backdrop-blur-sm rounded-lg p-4">
               <div className="flex items-center justify-center mb-2">
                 <DollarSign className="w-6 h-6 text-success mr-2" />
-                <span className="text-2xl font-bold text-primary-foreground">$850k+</span>
+                <span className="text-2xl font-bold text-primary-foreground">$2M+</span>
               </div>
-              <p className="text-primary-foreground/70 text-sm">Cost Savings Delivered</p>
+              <p className="text-primary-foreground/70 text-sm">ROI Generated for Clients</p>
             </div>
             <div className="bg-background/10 backdrop-blur-sm rounded-lg p-4">
               <div className="flex items-center justify-center mb-2">
                 <Clock className="w-6 h-6 text-accent mr-2" />
-                <span className="text-2xl font-bold text-primary-foreground">75%</span>
+                <span className="text-2xl font-bold text-primary-foreground">80%</span>
               </div>
-              <p className="text-primary-foreground/70 text-sm">Average Time Reduction</p>
+              <p className="text-primary-foreground/70 text-sm">Operational Cost Reduction</p>
             </div>
             <div className="bg-background/10 backdrop-blur-sm rounded-lg p-4">
               <div className="flex items-center justify-center mb-2">
                 <TrendingUp className="w-6 h-6 text-success mr-2" />
-                <span className="text-2xl font-bold text-primary-foreground">320k+</span>
+                <span className="text-2xl font-bold text-primary-foreground">95%</span>
               </div>
-              <p className="text-primary-foreground/70 text-sm">Revenue Increase</p>
+              <p className="text-primary-foreground/70 text-sm">Process Automation Success</p>
             </div>
           </div>
 
@@ -62,22 +62,22 @@ const Hero = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Button variant="hero" size="lg" asChild>
               <Link to="/projects">
-                View Case Studies
+                See Business Impact
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Link>
             </Button>
             <Button variant="outline" size="lg" className="bg-background/20 border-primary-foreground/30 text-primary-foreground hover:bg-background/30" asChild>
-              <Link to="/savings-calculator">
-                Calculate Your ROI
+              <Link to="/contact">
+                Partner with Me
               </Link>
             </Button>
           </div>
 
           {/* Trust Indicators */}
           <div className="mt-16">
-            <p className="text-primary-foreground/60 text-sm mb-4">Helping Kenyan businesses grow through automation</p>
+            <p className="text-primary-foreground/60 text-sm mb-4">Angular + NestJS • Full-Stack Development • Business Automation</p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-8 text-primary-foreground/40">
-              <span className="text-lg font-semibold">E-commerce • Retail • SMEs • Online Stores</span>
+              <span className="text-lg font-semibold">Startups • Scale-ups • Enterprise • Investors</span>
             </div>
           </div>
         </div>

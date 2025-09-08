@@ -6,64 +6,64 @@ import { Bot, Code, TrendingDown, ArrowRight, CheckCircle } from 'lucide-react';
 const Services = () => {
   const services = [
     {
-      id: 'lead-nurturing',
-      title: 'Lead Nurturing Workflows',
-      description: 'Turn website visitors into paying customers with automated follow-up sequences that guide prospects through your sales funnel.',
-      icon: Bot,
-      features: [
-        'Automated email sequences for new leads',
-        'WhatsApp follow-up campaigns',
-        'Abandoned cart recovery workflows',
-        'Lead scoring and segmentation',
-        'Personalized product recommendations'
-      ],
-      benefits: 'Increase conversion rates by 35-50% and recover lost sales',
-      ctaText: 'Start Converting More Leads'
-    },
-    {
-      id: 'inventory-management',
-      title: 'Inventory Management Systems',
-      description: 'Never run out of stock again. Automated inventory tracking that prevents stockouts and eliminates manual counting errors.',
+      id: 'revenue-optimization',
+      title: 'Revenue Optimization Systems',
+      description: 'Transform underperforming sales processes into profit-generating machines. I build intelligent systems that identify revenue leaks, automate lead nurturing, and maximize customer lifetime value.',
       icon: TrendingDown,
       features: [
-        'Real-time stock level monitoring',
-        'Automatic reorder alerts',
-        'Supplier integration and ordering',
-        'Sales forecasting and planning',
-        'Multi-location inventory tracking'
+        'Automated sales funnel optimization',
+        'Customer behavior analytics & insights',
+        'Dynamic pricing & revenue models',
+        'Conversion rate optimization systems',
+        'Predictive sales forecasting'
       ],
-      benefits: 'Reduce stockouts by 80% and cut inventory costs by 25%',
-      ctaText: 'Optimize My Inventory'
+      benefits: 'Increase revenue by 40-60% while reducing customer acquisition costs',
+      ctaText: 'Maximize My Revenue'
     },
     {
-      id: 'customer-service',
-      title: 'Customer Service Automation',
-      description: 'Respond to customers instantly, even when you\'re busy. Automated support that improves satisfaction and saves your time.',
-      icon: Code,
-      features: [
-        'AI chatbots for instant responses',
-        'Automated ticket routing and prioritization',
-        'FAQ automation for common questions',
-        'Order status and tracking updates',
-        'Multi-channel support (WhatsApp, SMS, email)'
-      ],
-      benefits: 'Improve response times by 90% and customer satisfaction scores',
-      ctaText: 'Automate Customer Support'
-    },
-    {
-      id: 'crm-integration',
-      title: 'CRM Integration & Management',
-      description: 'Centralize all customer data in one place. Streamline your sales process and never lose track of important customer information.',
+      id: 'operational-efficiency',
+      title: 'Operational Cost Reduction',
+      description: 'Eliminate expensive manual processes that drain your budget. I automate repetitive tasks, streamline workflows, and build systems that do the work of entire teams.',
       icon: Bot,
       features: [
-        'Customer data centralization',
-        'Sales pipeline automation',
-        'Customer communication history',
-        'Purchase behavior tracking',
-        'Integration with accounting systems'
+        'Process automation & workflow optimization',
+        'Data migration & system integration',
+        'Resource allocation optimization',
+        'Quality assurance automation',
+        'Performance monitoring & alerts'
       ],
-      benefits: 'Increase sales efficiency by 40% and improve customer retention',
-      ctaText: 'Streamline My Sales'
+      benefits: 'Cut operational costs by 50-70% and improve team productivity',
+      ctaText: 'Reduce My Costs'
+    },
+    {
+      id: 'scalable-infrastructure',
+      title: 'Scalable Business Infrastructure',
+      description: 'Build technology foundations that grow with your business. My full-stack solutions handle increased demand, support team growth, and adapt to changing market conditions.',
+      icon: Code,
+      features: [
+        'Cloud-native architecture design',
+        'Auto-scaling system implementation',
+        'Database optimization & management',
+        'API development & integration',
+        'Security & compliance frameworks'
+      ],
+      benefits: 'Scale operations 10x without proportional cost increases',
+      ctaText: 'Scale My Business'
+    },
+    {
+      id: 'data-intelligence',
+      title: 'Business Intelligence & Analytics',
+      description: 'Turn data into profitable decisions. I create comprehensive dashboards and analytics systems that reveal hidden opportunities and guide strategic business decisions.',
+      icon: Bot,
+      features: [
+        'Real-time business metrics dashboards',
+        'Predictive analytics & forecasting',
+        'Customer behavior analysis',
+        'Financial performance tracking',
+        'Automated reporting systems'
+      ],
+      benefits: 'Make data-driven decisions that increase profitability by 30%+',
+      ctaText: 'Unlock My Data'
     }
   ];
 
@@ -73,11 +73,11 @@ const Services = () => {
         {/* Header */}
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl font-heading font-bold text-primary mb-4">
-            Automation Solutions for Kenyan Businesses
+            Business Problems I Solve Through Technology
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            We understand the challenges of running an e-commerce or retail business in Kenya. 
-            Our automation solutions help you focus on growing your business while we handle the repetitive tasks.
+            I bridge the gap between business objectives and technical execution. Every system I build is designed 
+            to eliminate inefficiencies, reduce costs, and drive measurable revenue growth.
           </p>
         </div>
 
@@ -132,18 +132,18 @@ const Services = () => {
         {/* Bottom CTA */}
         <div className="text-center bg-primary/5 rounded-2xl p-8 border border-primary/10">
           <h3 className="text-2xl font-heading font-bold text-primary mb-4">
-            Ready to Grow Your Business with Automation?
+            Ready to Transform Your Business Operations?
           </h3>
           <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-            Let's discuss how automation can solve your specific business challenges. 
-            Free consultation to understand your needs and show you exactly how much time and money you can save.
+            I combine technical expertise with business acumen to deliver systems that generate real ROI. 
+            Let's discuss how my full-stack development + automation approach can solve your biggest challenges.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button variant="default" size="lg" asChild>
-              <Link to="/contact">Start Your Project</Link>
+              <Link to="/contact">Partner with Me</Link>
             </Button>
             <Button variant="outline" size="lg" asChild>
-              <Link to="/savings-calculator">Calculate Potential Savings</Link>
+              <Link to="/projects">View Success Stories</Link>
             </Button>
           </div>
         </div>
