@@ -21,16 +21,16 @@ const Hero = () => {
 
           {/* Main Headline */}
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-bold text-primary-foreground mb-6">
-            Transform Your Business with{' '}
+            Stop Losing Sales to{' '}
             <span className="bg-gradient-to-r from-accent to-success bg-clip-text text-transparent">
-              AI-Powered Automation
+              Manual Tasks
             </span>
           </h1>
 
           {/* Subheadline */}
           <p className="text-xl sm:text-2xl text-primary-foreground/80 mb-8 max-w-3xl mx-auto leading-relaxed">
-            Full-stack developer specializing in Angular, NestJS, and intelligent automation. 
-            I build solutions that <strong>save costs, reduce time, and increase revenue</strong> with proven ROI.
+            We help Kenyan e-commerce and retail businesses automate repetitive tasks, 
+            reduce stockouts, and <strong>turn more visitors into paying customers</strong>.
           </p>
 
           {/* Stats Preview */}
@@ -75,9 +75,9 @@ const Hero = () => {
 
           {/* Trust Indicators */}
           <div className="mt-16">
-            <p className="text-primary-foreground/60 text-sm mb-4">Trusted by companies to deliver results</p>
+            <p className="text-primary-foreground/60 text-sm mb-4">Helping Kenyan businesses grow through automation</p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-8 text-primary-foreground/40">
-              <span className="text-lg font-semibold">Manufacturing • SaaS • Finance • Healthcare</span>
+              <span className="text-lg font-semibold">E-commerce • Retail • SMEs • Online Stores</span>
             </div>
           </div>
         </div>
