@@ -44,6 +44,21 @@
         "timeReduced": "75% faster defect detection"
       },
       "image": "/placeholder-manufacturing.jpg"
+    },
+    {
+      "id": "4",
+      "title": "shambaSmart: Agricultural Intelligence Platform",
+      "description": "AI-powered farming platform eliminating counterfeit inputs and broker exploitation while optimizing crop health and yield.",
+      "problem": "Kenyan farmers losing 40% revenue to counterfeit inputs, broker price manipulation, and poor crop management decisions.",
+      "solution": "Full-stack platform with AI crop diagnosis, verified input marketplace, and smart application recommendations.",
+      "technologies": ["Angular", "NestJS", "AI/ML", "Computer Vision", "PostgreSQL"],
+      "metrics": {
+        "revenueIncreased": "+65% farm profitability",
+        "costSaved": "$2,400/farmer/season",
+        "efficiency": "90% reduction in counterfeit purchases"
+      },
+      "image": "/placeholder-agriculture.jpg",
+      "demoUrl": "https://shamba-smart-web-app.vercel.app/"
     }
   ]
 }
