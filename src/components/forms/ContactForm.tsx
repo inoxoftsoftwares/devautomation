@@ -44,9 +44,7 @@ const ContactForm = ({ defaultType, defaultService }: ContactFormProps) => {
           }
         ]);
 
-      if (error) {
-        throw error;
-      }
+      if (error) throw error;
 
       setSubmitted(true);
       toast({

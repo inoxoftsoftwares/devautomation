@@ -1,12 +1,14 @@
-import { useState, useEffect } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { useToast } from '@/hooks/use-toast';
-import { LogOut, Mail, User, Calendar, DollarSign, MessageSquare, Users } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
+import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/hooks/useAuth';
+import { supabase } from '@/integrations/supabase/client';
+import { LogOut, Mail, Calendar, DollarSign, MessageSquare, User } from 'lucide-react';
+import Navbar from '@/components/layout/Navbar';
+import Footer from '@/components/layout/Footer';
 
 interface Contact {
   id: string;
@@ -14,78 +16,51 @@ interface Contact {
   email: string;
   message: string;
   budget: string;
-  type: string;
+  type: 'hire' | 'client' | 'investor';
   created_at: string;
 }
 
-interface Profile {
-  id: string;
-  user_id: string;
-  email: string;
-  role: string;
-}
-
 const Admin = () => {
-  const [contacts, setContacts] = useState<Contact[]>([]);
-  const [profile, setProfile] = useState<Profile | null>(null);
-  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { user, signOut, isAdmin, loading } = useAuth();
+  const [contacts, setContacts] = useState<Contact[]>([]);
+  const [loadingContacts, setLoadingContacts] = useState(true);
 
   useEffect(() => {
-    checkAuth();
-  }, []);
-
-  const checkAuth = async () => {
-    const { data: { session } } = await supabase.auth.getSession();
-    
-    if (!session) {
+    if (!loading && (!user || !isAdmin)) {
       navigate('/auth');
-      return;
     }
+  }, [user, isAdmin, loading, navigate]);
 
-    // Get user profile
-    const { data: profileData, error: profileError } = await supabase
-      .from('profiles')
-      .select('*')
-      .eq('user_id', session.user.id)
-      .single();
-
-    if (profileError || !profileData || profileData.role !== 'admin') {
-      toast({
-        title: "Access Denied",
-        description: "You don't have admin privileges",
-        variant: "destructive",
-      });
-      navigate('/');
-      return;
+  useEffect(() => {
+    if (user && isAdmin) {
+      fetchContacts();
     }
+  }, [user, isAdmin]);
 
-    setProfile(profileData);
-    loadContacts();
-  };
+  const fetchContacts = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('contacts')
+        .select('*')
+        .order('created_at', { ascending: false });
 
-  const loadContacts = async () => {
-    setLoading(true);
-    const { data, error } = await supabase
-      .from('contacts')
-      .select('*')
-      .order('created_at', { ascending: false });
-
-    if (error) {
+      if (error) throw error;
+      setContacts((data || []) as Contact[]);
+    } catch (error) {
       toast({
         title: "Error loading contacts",
-        description: error.message,
+        description: "Failed to fetch contact submissions.",
         variant: "destructive",
       });
-    } else {
-      setContacts(data || []);
+    } finally {
+      setLoadingContacts(false);
     }
-    setLoading(false);
   };
 
   const handleSignOut = async () => {
-    await supabase.auth.signOut();
+    await signOut();
     navigate('/');
   };
 
@@ -98,162 +73,111 @@ const Admin = () => {
     }
   };
 
-  const getTypeIcon = (type: string) => {
+  const getTypeLabel = (type: string) => {
     switch (type) {
-      case 'client': return <User className="w-4 h-4" />;
-      case 'hire': return <Users className="w-4 h-4" />;
-      case 'investor': return <DollarSign className="w-4 h-4" />;
-      default: return <Mail className="w-4 h-4" />;
+      case 'client': return 'Client Project';
+      case 'hire': return 'Employment';
+      case 'investor': return 'Investment';
+      default: return type;
     }
   };
 
-  if (loading) {
+  if (loading || (!user || !isAdmin)) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="text-lg">Loading...</div>
+        <div className="animate-pulse">Loading...</div>
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b bg-card">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div>
-            <h1 className="text-2xl font-bold">Admin Dashboard</h1>
-            <p className="text-muted-foreground">
-              Welcome back, {profile?.email}
-            </p>
+      <Navbar />
+      <main className="pt-20 pb-16">
+        <div className="container mx-auto px-4">
+          <div className="flex justify-between items-center mb-8">
+            <div>
+              <h1 className="text-3xl font-bold text-primary">Admin Dashboard</h1>
+              <p className="text-muted-foreground">Manage contact submissions and inquiries</p>
+            </div>
+            <Button onClick={handleSignOut} variant="outline">
+              <LogOut className="w-4 h-4 mr-2" />
+              Sign Out
+            </Button>
           </div>
-          <Button variant="outline" onClick={handleSignOut}>
-            <LogOut className="w-4 h-4 mr-2" />
-            Sign Out
-          </Button>
-        </div>
-      </header>
 
-      {/* Content */}
-      <main className="container mx-auto px-4 py-8">
-        {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-muted-foreground">Total Contacts</p>
-                  <p className="text-2xl font-bold">{contacts.length}</p>
-                </div>
-                <Mail className="w-8 h-8 text-primary" />
-              </div>
-            </CardContent>
-          </Card>
-          
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-muted-foreground">Client Projects</p>
-                  <p className="text-2xl font-bold">
-                    {contacts.filter(c => c.type === 'client').length}
-                  </p>
-                </div>
-                <User className="w-8 h-8 text-blue-600" />
-              </div>
-            </CardContent>
-          </Card>
-          
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-muted-foreground">Hire Requests</p>
-                  <p className="text-2xl font-bold">
-                    {contacts.filter(c => c.type === 'hire').length}
-                  </p>
-                </div>
-                <Users className="w-8 h-8 text-green-600" />
-              </div>
-            </CardContent>
-          </Card>
-          
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-muted-foreground">Investors</p>
-                  <p className="text-2xl font-bold">
-                    {contacts.filter(c => c.type === 'investor').length}
-                  </p>
-                </div>
-                <DollarSign className="w-8 h-8 text-purple-600" />
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Contacts List */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Contact Submissions</CardTitle>
-            <CardDescription>
-              All contact form submissions from your portfolio website
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            {contacts.length === 0 ? (
-              <div className="text-center py-8 text-muted-foreground">
-                <Mail className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                <p>No contacts yet. Check back later!</p>
-              </div>
-            ) : (
-              <div className="space-y-6">
-                {contacts.map((contact) => (
-                  <div key={contact.id} className="border rounded-lg p-6">
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="flex items-center gap-3">
-                        {getTypeIcon(contact.type)}
-                        <div>
-                          <h3 className="font-semibold text-lg">{contact.name}</h3>
-                          <p className="text-sm text-muted-foreground">{contact.email}</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Badge className={getTypeColor(contact.type)}>
-                          {contact.type}
-                        </Badge>
-                        <div className="text-sm text-muted-foreground flex items-center gap-1">
-                          <Calendar className="w-4 h-4" />
-                          {new Date(contact.created_at).toLocaleDateString()}
-                        </div>
-                      </div>
-                    </div>
-                    
-                    {contact.budget && (
-                      <div className="mb-4">
-                        <span className="text-sm font-medium text-muted-foreground">Budget: </span>
-                        <span className="text-sm">{contact.budget}</span>
-                      </div>
-                    )}
-                    
-                    <Separator className="my-4" />
-                    
-                    <div className="space-y-2">
-                      <div className="flex items-center gap-2">
-                        <MessageSquare className="w-4 h-4 text-muted-foreground" />
-                        <span className="text-sm font-medium">Message:</span>
-                      </div>
-                      <p className="text-sm text-muted-foreground whitespace-pre-wrap">
-                        {contact.message}
-                      </p>
-                    </div>
+          <div className="grid gap-6 mb-8">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <MessageSquare className="w-5 h-5" />
+                  Contact Submissions ({contacts.length})
+                </CardTitle>
+                <CardDescription>
+                  Recent inquiries from potential clients, employers, and investors
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                {loadingContacts ? (
+                  <div className="text-center py-8">
+                    <div className="animate-pulse">Loading contacts...</div>
                   </div>
-                ))}
-              </div>
-            )}
-          </CardContent>
-        </Card>
+                ) : contacts.length === 0 ? (
+                  <div className="text-center py-8 text-muted-foreground">
+                    No contact submissions yet.
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {contacts.map((contact) => (
+                      <Card key={contact.id} className="border-l-4 border-l-primary">
+                        <CardContent className="pt-6">
+                          <div className="flex justify-between items-start mb-4">
+                            <div className="flex items-center gap-3">
+                              <User className="w-5 h-5 text-muted-foreground" />
+                              <div>
+                                <h3 className="font-semibold">{contact.name}</h3>
+                                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                  <Mail className="w-4 h-4" />
+                                  {contact.email}
+                                </div>
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Badge className={getTypeColor(contact.type)}>
+                                {getTypeLabel(contact.type)}
+                              </Badge>
+                              <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                                <Calendar className="w-4 h-4" />
+                                {new Date(contact.created_at).toLocaleDateString()}
+                              </div>
+                            </div>
+                          </div>
+                          
+                          {contact.budget && (
+                            <div className="flex items-center gap-2 mb-3 text-sm">
+                              <DollarSign className="w-4 h-4 text-green-600" />
+                              <span className="font-medium">Budget:</span>
+                              <span>${contact.budget}</span>
+                            </div>
+                          )}
+                          
+                          <div className="bg-muted/50 rounded-lg p-4">
+                            <h4 className="font-medium mb-2">Message:</h4>
+                            <p className="text-sm leading-relaxed whitespace-pre-wrap">
+                              {contact.message}
+                            </p>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </div>
+        </div>
       </main>
+      <Footer />
     </div>
   );
 };
