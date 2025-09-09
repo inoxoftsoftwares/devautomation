@@ -7,7 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
 import { ContactFormData } from '@/types';
-import { apiService } from '@/services/api';
+import { supabase } from '@/integrations/supabase/client';
 import { Send, CheckCircle } from 'lucide-react';
 
 interface ContactFormProps {
@@ -32,14 +32,27 @@ const ContactForm = ({ defaultType, defaultService }: ContactFormProps) => {
     setLoading(true);
 
     try {
-      const result = await apiService.submitContact(formData);
-      if (result.success) {
-        setSubmitted(true);
-        toast({
-          title: "Message sent successfully!",
-          description: result.message,
-        });
+      const { error } = await supabase
+        .from('contacts')
+        .insert([
+          {
+            name: formData.name,
+            email: formData.email,
+            message: formData.message,
+            budget: formData.budget,
+            type: formData.type
+          }
+        ]);
+
+      if (error) {
+        throw error;
       }
+
+      setSubmitted(true);
+      toast({
+        title: "Message sent successfully!",
+        description: "Thank you for your message! I'll get back to you within 24 hours.",
+      });
     } catch (error) {
       toast({
         title: "Error sending message",
