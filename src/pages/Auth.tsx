@@ -25,7 +25,10 @@ const Auth = () => {
 
   useEffect(() => {
     if (user && !loading) {
-      navigate('/');
+      // Redirect admin users to admin panel, others to home
+      if (user) {
+        navigate('/');
+      }
     }
   }, [user, loading, navigate]);
 

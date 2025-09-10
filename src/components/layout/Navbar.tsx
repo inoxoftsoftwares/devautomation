@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Menu, X, Code, Zap } from 'lucide-react';
+import { Menu, X, Code, Zap, Shield } from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const { user, isAdmin, signOut } = useAuth();
 
   const navigation = [
     { name: 'Home', href: '/' },
@@ -50,6 +52,25 @@ const Navbar = () => {
             <Button variant="outline" size="sm" asChild>
               <Link to="/savings-calculator">ROI Calculator</Link>
             </Button>
+            {user ? (
+              <div className="flex items-center space-x-2">
+                {isAdmin && (
+                  <Button variant="secondary" size="sm" asChild>
+                    <Link to="/admin">
+                      <Shield className="w-4 h-4 mr-1" />
+                      Admin
+                    </Link>
+                  </Button>
+                )}
+                <Button variant="ghost" size="sm" onClick={signOut}>
+                  Sign Out
+                </Button>
+              </div>
+            ) : (
+              <Button size="sm" asChild>
+                <Link to="/auth">Sign In</Link>
+              </Button>
+            )}
           </div>
 
           {/* Mobile menu button */}
@@ -82,10 +103,29 @@ const Navbar = () => {
                   {item.name}
                 </Link>
               ))}
-              <div className="px-3 py-2">
+              <div className="px-3 py-2 space-y-2">
                 <Button variant="outline" size="sm" className="w-full" asChild>
                   <Link to="/savings-calculator">ROI Calculator</Link>
                 </Button>
+                {user ? (
+                  <>
+                    {isAdmin && (
+                      <Button variant="secondary" size="sm" className="w-full" asChild>
+                        <Link to="/admin">
+                          <Shield className="w-4 h-4 mr-1" />
+                          Admin
+                        </Link>
+                      </Button>
+                    )}
+                    <Button variant="ghost" size="sm" className="w-full" onClick={signOut}>
+                      Sign Out
+                    </Button>
+                  </>
+                ) : (
+                  <Button size="sm" className="w-full" asChild>
+                    <Link to="/auth">Sign In</Link>
+                  </Button>
+                )}
               </div>
             </div>
           </div>

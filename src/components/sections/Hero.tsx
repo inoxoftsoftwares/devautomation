@@ -4,7 +4,7 @@ import { ArrowRight, Zap, DollarSign, Clock, TrendingUp } from 'lucide-react';
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-hero-gradient overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center bg-hero-gradient overflow-hidden pt-16">
       {/* Background Elements */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-accent rounded-full blur-3xl"></div>
