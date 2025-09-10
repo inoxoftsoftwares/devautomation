@@ -22,6 +22,7 @@ export type Database = {
           id: string
           message: string
           name: string
+          resume_file_path: string | null
           type: string
           updated_at: string
         }
@@ -32,6 +33,7 @@ export type Database = {
           id?: string
           message: string
           name: string
+          resume_file_path?: string | null
           type: string
           updated_at?: string
         }
@@ -42,6 +44,7 @@ export type Database = {
           id?: string
           message?: string
           name?: string
+          resume_file_path?: string | null
           type?: string
           updated_at?: string
         }

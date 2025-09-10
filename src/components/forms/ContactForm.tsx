@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useToast } from '@/hooks/use-toast';
 import { ContactFormData } from '@/types';
 import { supabase } from '@/integrations/supabase/client';
+import ResumeUpload from './ResumeUpload';
 import { Send, CheckCircle } from 'lucide-react';
 
 interface ContactFormProps {
@@ -26,6 +27,7 @@ const ContactForm = ({ defaultType, defaultService }: ContactFormProps) => {
     budget: '',
     type: defaultType || 'client'
   });
+  const [resumeFilePath, setResumeFilePath] = useState<string>('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,7 +42,8 @@ const ContactForm = ({ defaultType, defaultService }: ContactFormProps) => {
             email: formData.email,
             message: formData.message,
             budget: formData.budget,
-            type: formData.type
+            type: formData.type,
+            resume_file_path: resumeFilePath || null
           }
         ]);
 
@@ -187,6 +190,12 @@ const ContactForm = ({ defaultType, defaultService }: ContactFormProps) => {
               rows={6}
             />
           </div>
+
+          {/* Resume Upload */}
+          <ResumeUpload 
+            onFileUploaded={setResumeFilePath}
+            currentFile={resumeFilePath}
+          />
 
           {/* Submit Button */}
           <Button 

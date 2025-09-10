@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
-import { LogOut, Mail, Calendar, DollarSign, MessageSquare, User } from 'lucide-react';
+import { LogOut, Mail, Calendar, DollarSign, MessageSquare, User, Download, FileText } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 
@@ -17,6 +17,7 @@ interface Contact {
   message: string;
   budget: string;
   type: 'hire' | 'client' | 'investor';
+  resume_file_path: string | null;
   created_at: string;
 }
 
@@ -56,6 +57,37 @@ const Admin = () => {
       });
     } finally {
       setLoadingContacts(false);
+    }
+  };
+
+  const downloadResume = async (filePath: string, contactName: string) => {
+    try {
+      const { data, error } = await supabase.storage
+        .from('resumes')
+        .download(filePath);
+
+      if (error) throw error;
+
+      // Create download link
+      const url = URL.createObjectURL(data);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${contactName}_resume.${filePath.split('.').pop()}`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      toast({
+        title: "Resume downloaded",
+        description: `Downloaded resume for ${contactName}`,
+      });
+    } catch (error: any) {
+      toast({
+        title: "Download failed",
+        description: error.message,
+        variant: "destructive",
+      });
     }
   };
 
@@ -160,13 +192,30 @@ const Admin = () => {
                               <span>${contact.budget}</span>
                             </div>
                           )}
-                          
+                           
                           <div className="bg-muted/50 rounded-lg p-4">
                             <h4 className="font-medium mb-2">Message:</h4>
                             <p className="text-sm leading-relaxed whitespace-pre-wrap">
                               {contact.message}
                             </p>
                           </div>
+
+                          {contact.resume_file_path && (
+                            <div className="flex items-center justify-between mt-4 p-3 bg-muted/30 rounded-lg">
+                              <div className="flex items-center">
+                                <FileText className="w-4 h-4 mr-2 text-primary" />
+                                <span className="text-sm font-medium">Resume attached</span>
+                              </div>
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => downloadResume(contact.resume_file_path!, contact.name)}
+                              >
+                                <Download className="w-4 h-4 mr-1" />
+                                Download
+                              </Button>
+                            </div>
+                          )}
                         </CardContent>
                       </Card>
                     ))}
